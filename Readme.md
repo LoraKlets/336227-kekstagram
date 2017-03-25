@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
-* Студент: [Неопознанный енот](https://up.htmlacademy.ru/javascript/9/user/336227).
-* Наставник: `Неизвестно`.
+* Студент: [Лора Клец](https://up.htmlacademy.ru/javascript/9/user/336227).
+* Наставник: `Евгений Лепешкин`.
 
 ---
 
