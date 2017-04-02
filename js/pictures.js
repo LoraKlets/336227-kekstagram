@@ -19,7 +19,7 @@ var isPhotoInArray = function (array, num) {
 var pictureArray = [];
 for (var i = 0; i < 25; i++) {
   var picture = {};
-  
+
   var numPhoto = randomNumber(1, 25);
   while (isPhotoInArray(photoNumbers, numPhoto) > -1) {
     numPhoto = randomNumber(1, 25);
