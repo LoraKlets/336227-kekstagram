@@ -29,10 +29,10 @@ for (var i = 0; i < 25; i++) {
   picture.likes = randomNumber(15, 200);
   picture.comments = [];
   var randomIndexComment = randomNumber(0, COMMENT_STRINGS.length - 1);
-  picture.comments.push(COMMENT_STRINGS[randomIndexComment]); 
+  picture.comments.push(COMMENT_STRINGS[randomIndexComment]);
   var numberComments = randomNumber(1, 2);
   if (numberComments > 1) {
-    var currentIndex = randomIndexComment;  
+    var currentIndex = randomIndexComment;
     while (currentIndex === randomIndexComment) {
       currentIndex = randomNumber(0, COMMENT_STRINGS.length - 1);
     }
