@@ -40,7 +40,7 @@ for (var i = 0; i < 25; i++) {
   }
   pictureArray.push(picture);
 }
-
+// заполнение шаблона
 var pictureTemplate = document.querySelector('#picture-template').content;
 var fillTemplate = function (photo) {
   var photoUnit = pictureTemplate.cloneNode(true);
