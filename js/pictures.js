@@ -1,7 +1,7 @@
 'use strict';
 
 var randomNumber = function (MIN, MAX) {
-  return  MIN + Math.floor(Math.random() * (MAX + 1 - MIN));
+  return MIN + Math.floor(Math.random() * (MAX + 1 - MIN));
 };
 var photoNumbers = [];
 var COMMENT_STRINGS = [
@@ -17,25 +17,25 @@ var isPhotoInArray = function (array, num) {
 };
 
 var pictureArray = [];
-for (var i=0; i < 25; i++) {
+for (var i = 0; i < 25; i++) {
   var picture = {};
   
   var numPhoto = randomNumber(1, 25);
-  while (isPhotoInArray(photoNumbers, numPhoto) > -1){
-      numPhoto = randomNumber(1, 25);
-  };
-  photoNumbers.push(numPhoto); 
+  while (isPhotoInArray(photoNumbers, numPhoto) > -1) {
+    numPhoto = randomNumber(1, 25);
+  }
+  photoNumbers.push(numPhoto);
   picture.url = 'photos/' + numPhoto + '.jpg';
   picture.likes = randomNumber(15, 200);
-  picture.comments = []; 
+  picture.comments = [];
   var randomIndexComment = randomNumber(0, COMMENT_STRINGS.length - 1);
   picture.comments.push(COMMENT_STRINGS[randomIndexComment]); 
-  var numberComments = randomNumber(1,2);
+  var numberComments = randomNumber(1, 2);
   if (numberComments > 1) {
     var currentIndex = randomIndexComment;  
     while (currentIndex === randomIndexComment) {
-        currentIndex = randomNumber(0, COMMENT_STRINGS.length - 1);
-    };
+      currentIndex = randomNumber(0, COMMENT_STRINGS.length - 1);
+    }
     picture.comments.push(COMMENT_STRINGS[currentIndex]);
   }
   pictureArray.push(picture);
@@ -56,9 +56,9 @@ for (i = 0; i < pictureArray.length; i++) {
 }
 blockPictures.appendChild(fragment);
 
- document.querySelector('.upload-overlay').classList.add('invisible');
+document.querySelector('.upload-overlay').classList.add('invisible');
 
-var galleryOverlay = document.querySelector('.gallery-overlay'); 
+var galleryOverlay = document.querySelector('.gallery-overlay');
 
 galleryOverlay.querySelector('.gallery-overlay-image').src = pictureArray[0].url;
 galleryOverlay.querySelector('.likes-count').textContent = pictureArray[0].likes;
