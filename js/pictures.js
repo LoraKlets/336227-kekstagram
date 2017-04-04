@@ -1,8 +1,6 @@
 'use strict';
-
-var randomNumber = function (MIN, MAX) {
-  return MIN + Math.floor(Math.random() * (MAX + 1 - MIN));
-};
+var TWENTY_FIVE = 25;
+var nextNum;
 var photoNumbers = [];
 var COMMENT_STRINGS = [
   'Всё отлично!',
@@ -12,22 +10,29 @@ var COMMENT_STRINGS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как-будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
+var randomNumber = function (MIN, MAX) {
+  return MIN + Math.floor(Math.random() * (MAX + 1 - MIN));
+};
+
 var isPhotoInArray = function (array, num) {
   return array.indexOf(num);
 };
-
-var pictureArray = [];
-for (var i = 0; i < 25; i++) {
-  var picture = {};
-
-  var numPhoto = randomNumber(1, 25);
-  while (isPhotoInArray(photoNumbers, numPhoto) > -1) {
-    numPhoto = randomNumber(1, 25);
+var nextPhotoNum = function (array) {
+  var numPhoto = randomNumber(1, TWENTY_FIVE);  
+  while (isPhotoInArray(array, numPhoto) > -1) {
+    numPhoto = randomNumber(1, TWENTY_FIVE);
   }
-  photoNumbers.push(numPhoto);
-  picture.url = 'photos/' + numPhoto + '.jpg';
+  return numPhoto;
+};
+var pictureArray = [];
+for (var i = 0; i < TWENTY_FIVE; i++) {
+  var picture = {};
+  nextNum = nextPhotoNum(photoNumbers);
+  photoNumbers.push(nextNum);
+  picture.url = 'photos/' + nextNum + '.jpg';
   picture.likes = randomNumber(15, 200);
   picture.comments = [];
+  
   var randomIndexComment = randomNumber(0, COMMENT_STRINGS.length - 1);
   picture.comments.push(COMMENT_STRINGS[randomIndexComment]);
   var numberComments = randomNumber(1, 2);
@@ -49,18 +54,25 @@ var fillTemplate = function (photo) {
   photoUnit.querySelector('.picture-likes').textContent = photo.likes;
   return photoUnit;
 };
+var doOverlayInvisible = function (el) {
+    el.classList.add('invisible');  
+};
+var doOverlayVisible = function (el) {
+    el.classList.remove('invisible');  
+};
 var blockPictures = document.querySelector('.pictures');
 var fragment = document.createDocumentFragment();
 for (i = 0; i < pictureArray.length; i++) {
   fragment.appendChild(fillTemplate(pictureArray[i]));
 }
 blockPictures.appendChild(fragment);
-
-document.querySelector('.upload-overlay').classList.add('invisible');
+doOverlayInvisible(document.querySelector('.upload-overlay'));
 
 var galleryOverlay = document.querySelector('.gallery-overlay');
-
-galleryOverlay.querySelector('.gallery-overlay-image').src = pictureArray[0].url;
-galleryOverlay.querySelector('.likes-count').textContent = pictureArray[0].likes;
-galleryOverlay.querySelector('.comments-count').textContent = pictureArray[0].comments.length;
-galleryOverlay.classList.remove('invisible');
+var renderOverlay = function () {
+  galleryOverlay.querySelector('.gallery-overlay-image').src = pictureArray[0].url;
+  galleryOverlay.querySelector('.likes-count').textContent = pictureArray[0].likes;
+  galleryOverlay.querySelector('.comments-count').textContent = pictureArray[0].comments.length;
+};
+renderOverlay();
+doOverlayVisible(galleryOverlay);
