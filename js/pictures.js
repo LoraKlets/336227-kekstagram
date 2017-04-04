@@ -18,7 +18,7 @@ var isPhotoInArray = function (array, num) {
   return array.indexOf(num);
 };
 var nextPhotoNum = function (array) {
-  var numPhoto = randomNumber(1, TWENTY_FIVE);  
+  var numPhoto = randomNumber(1, TWENTY_FIVE);
   while (isPhotoInArray(array, numPhoto) > -1) {
     numPhoto = randomNumber(1, TWENTY_FIVE);
   }
@@ -55,10 +55,10 @@ var fillTemplate = function (photo) {
   return photoUnit;
 };
 var doOverlayInvisible = function (el) {
-    el.classList.add('invisible');  
+  el.classList.add('invisible');
 };
 var doOverlayVisible = function (el) {
-    el.classList.remove('invisible');  
+  el.classList.remove('invisible');
 };
 var blockPictures = document.querySelector('.pictures');
 var fragment = document.createDocumentFragment();
