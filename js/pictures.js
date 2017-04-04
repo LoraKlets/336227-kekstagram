@@ -68,10 +68,10 @@ blockPictures.appendChild(fragment);
 doOverlayInvisible(document.querySelector('.upload-overlay'));
 
 var galleryOverlay = document.querySelector('.gallery-overlay');
-var renderOverlay = function (picture) {
-  galleryOverlay.querySelector('.gallery-overlay-image').src = picture.url;
-  galleryOverlay.querySelector('.likes-count').textContent = picture.likes;
-  galleryOverlay.querySelector('.comments-count').textContent = picture.comments.length;
+var renderOverlay = function (onePicture) {
+  galleryOverlay.querySelector('.gallery-overlay-image').src = onePicture.url;
+  galleryOverlay.querySelector('.likes-count').textContent = onePicture.likes;
+  galleryOverlay.querySelector('.comments-count').textContent = onePicture.comments.length;
 };
 renderOverlay(pictureArray[0]);
 doOverlayVisible(galleryOverlay);
