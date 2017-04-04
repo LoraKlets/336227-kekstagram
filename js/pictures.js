@@ -32,7 +32,6 @@ for (var i = 0; i < TWENTY_FIVE; i++) {
   picture.url = 'photos/' + nextNum + '.jpg';
   picture.likes = randomNumber(15, 200);
   picture.comments = [];
-  
   var randomIndexComment = randomNumber(0, COMMENT_STRINGS.length - 1);
   picture.comments.push(COMMENT_STRINGS[randomIndexComment]);
   var numberComments = randomNumber(1, 2);
