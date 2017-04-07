@@ -149,12 +149,12 @@ var uploadOverlayKeyHandler = function (evt) {
 };
 var uploadSubmit = document.querySelector('#upload-submit');
 uploadSubmit.addEventListener('click', function () {
-  event.preventDefault(); 
+  event.preventDefault();
   onUploadFormClose();
 });
 uploadSubmit.addEventListener('keydown', function (evt) {
   if (isActivateEvent(evt)) {
     event.preventDefault();
     onUploadFormClose();
-  } 
+  }
 });
