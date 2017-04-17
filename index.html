@@ -114,7 +114,7 @@
 </footer>
 
 
-<div class="gallery-overlay invisible"   style = "border:1px solid green;background-color: #9A979A;" >
+<div class="gallery-overlay invisible"   style = "background-color: #9A979A;" >
   <span class="gallery-overlay-close" tabindex="0">&times;</span>
   <div class="gallery-overlay-preview">
     <img src="" class="gallery-overlay-image" alt="">
@@ -127,10 +127,11 @@
 
 <template id="picture-template" style="display: none">
   <a href="" class="picture" tabindex="0" >
-    <img  class="picture-num" id="0" src="" width="182" height="182"  >
-    <span class="picture-stats">
+    <img  id="0" src="" width="182" height="182"  >
+    <span class="picture-stats" >
       <span class="picture-stat picture-comments"></span>
       <span class="picture-stat picture-likes"></span>
+      <span class="picture-stat comments-count"></span>
     </span>
   </a>
 </template>

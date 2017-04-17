@@ -5,6 +5,7 @@ var ENTER_KEY_CODE = 13;
 var TWENTY_FIVE = 25;
 var nextNum;
 var photoNumbers = [];
+var pictureArray = [];
 var COMMENT_STRINGS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -31,7 +32,7 @@ var nextPhotoNum = function (array) {
   }
   return numPhoto;
 };
-var pictureArray = [];
+
 for (var i = 0; i < TWENTY_FIVE; i++) {
   var picture = {};
   nextNum = nextPhotoNum(photoNumbers);
@@ -53,12 +54,14 @@ for (var i = 0; i < TWENTY_FIVE; i++) {
 }
 // заполнение шаблона
 var pictureTemplate = document.querySelector('#picture-template').content;
-var fillTemplate = function (photo, num) {
+var fillTemplate = function (photo) {
   var photoUnit = pictureTemplate.cloneNode(true);
   photoUnit.querySelector('.picture').href = photo.url;
+  photoUnit.querySelector('img').src = photo.url;
+  photoUnit.querySelector('.comments-count').textContent = photo.comments.length;
   photoUnit.querySelector('.picture-comments').textContent = photo.comments;
   photoUnit.querySelector('.picture-likes').textContent = photo.likes;
-  photoUnit.querySelector('.picture-num').id = num;
+
   return photoUnit;
 };
 var doOverlayInvisible = function (el) {
@@ -70,7 +73,7 @@ var doOverlayVisible = function (el) {
 var blockPictures = document.querySelector('.pictures');
 var fragment = document.createDocumentFragment();
 for (i = 0; i < pictureArray.length; i++) {
-  fragment.appendChild(fillTemplate(pictureArray[i], i));
+  fragment.appendChild(fillTemplate(pictureArray[i]));
 }
 blockPictures.appendChild(fragment);
 doOverlayInvisible(document.querySelector('.upload-overlay'));
@@ -78,11 +81,14 @@ doOverlayInvisible(document.querySelector('.upload-overlay'));
 var galleryOverlay = document.querySelector('.gallery-overlay');
 
 var renderOverlay = function (onePicture) {
-  galleryOverlay.querySelector('.gallery-overlay-image').src = onePicture.url;
-  galleryOverlay.querySelector('.likes-count').textContent = onePicture.likes;
-  galleryOverlay.querySelector('.comments-count').textContent = onePicture.comments.length;
+
+  galleryOverlay.querySelector('.gallery-overlay-image').src = onePicture.href;
+  galleryOverlay.querySelector('.likes-count').textContent = onePicture.querySelector('.picture-likes').textContent;
+  galleryOverlay.querySelector('.comments-count').textContent = onePicture.querySelector('.comments-count').textContent;
 };
-renderOverlay(pictureArray[0]);
+var pictureElements = document.querySelectorAll('a.picture');
+
+renderOverlay(pictureElements[0]);
 doOverlayVisible(galleryOverlay);
 
 var galleryOverlayClose = galleryOverlay.querySelector('.gallery-overlay-close');
@@ -97,20 +103,20 @@ var onOverlayOpen = function (el) {
   doOverlayVisible(galleryOverlay);
 };
 
-blockPictures.addEventListener('click', function (evt) {
-  event.preventDefault();
-  if (evt.target.tagName === 'IMG') {
-    onOverlayOpen(pictureArray[evt.target.id]);
-  }
-});
-blockPictures.addEventListener('keydown', function (evt) {
-  if (isActivateEvent(evt)) {
-    if (evt.target.tagName === 'A') {
-      onOverlayOpen(pictureArray[evt.target.children[0].id]);
+for (i = 0; i < pictureElements.length; i++) {
+  pictureElements[i].addEventListener('click', function (evt) {
+    evt.preventDefault();
+    onOverlayOpen(evt.currentTarget);
+  });
+  pictureElements[i].addEventListener('keydown', function (evt) {
+    if (isActivateEvent(evt)) {
+      evt.preventDefault();
+      onOverlayOpen(evt.currentTarget);
       document.addEventListener('keydown', overlayKeydownHandler);
     }
-  }
-});
+  });
+}
+
 galleryOverlayClose.addEventListener('keydown', function (evt) {
   if (isActivateEvent(evt)) {
     doOverlayInvisible(galleryOverlay);
@@ -121,13 +127,18 @@ galleryOverlayClose.addEventListener('click', function () {
   doOverlayInvisible(galleryOverlay);
 });
 
-
 var uploadFile = document.querySelector('#upload-file');
 var uploadOverlay = document.querySelector('.upload-overlay');
 var uploadSelectImage = document.querySelector('#upload-select-image');
 var uploadFormCancel = uploadOverlay.querySelector('.upload-form-cancel');
 var uploadFormDescription = uploadOverlay.querySelector('.upload-form-description');
 
+var uploadOverlayKeyHandler = function (evt) {
+  if ((evt.keyCode === ESCAPE_KEY_CODE) && (document.activeElement !== uploadFormDescription)) {
+    uploadOverlay.classList.add('invisible');
+    uploadSelectImage.classList.remove('invisible');
+  }
+};
 var onUploadFormClose = function () {
   uploadSelectImage.classList.remove('invisible');
   uploadOverlay.classList.add('invisible');
@@ -141,12 +152,12 @@ uploadFile.addEventListener('change', function () {
 uploadFormCancel.addEventListener('click', function () {
   onUploadFormClose();
 });
-var uploadOverlayKeyHandler = function (evt) {
-  if ((evt.keyCode === ESCAPE_KEY_CODE) && (document.activeElement !== uploadFormDescription)) {
-    uploadOverlay.classList.add('invisible');
-    uploadSelectImage.classList.remove('invisible');
+uploadFormCancel.addEventListener('keydown', function (evt) {
+  if (isActivateEvent(evt)) {
+    onUploadFormClose();
   }
-};
+});
+
 var uploadSubmit = document.querySelector('#upload-submit');
 uploadSubmit.addEventListener('click', function () {
   event.preventDefault();
