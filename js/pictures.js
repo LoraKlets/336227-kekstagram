@@ -106,6 +106,7 @@ for (i = 0; i < pictureElements.length; i++) {
   pictureElements[i].addEventListener('click', function (evt) {
     evt.preventDefault();
     onOverlayOpen(evt.currentTarget);
+    document.addEventListener('keydown', overlayKeydownHandler);
   });
   pictureElements[i].addEventListener('keydown', function (evt) {
     if (isActivateEvent(evt)) {
@@ -119,7 +120,6 @@ for (i = 0; i < pictureElements.length; i++) {
 galleryOverlayClose.addEventListener('keydown', function (evt) {
   if (isActivateEvent(evt)) {
     doOverlayInvisible(galleryOverlay);
-    document.removeEventListener('keydown', overlayKeydownHandler);
   }
 });
 galleryOverlayClose.addEventListener('click', function () {
