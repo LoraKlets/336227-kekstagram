@@ -19,14 +19,14 @@
   <label for="filter-discussed" class="filters-item">Обсуждаемые</label>
 </form>
 
-<div class="upload">
-  <form class="upload-form upload-image invisible" id="upload-select-image" method="post" enctype="multipart/form-data">
-    <input type="file" id="upload-file" class="upload-input" name="filename" required>
+<div class="upload "  >
+  <form class="upload-form upload-image " id="upload-select-image" method="post" enctype="multipart/form-data">
+     <input type="file" id="upload-file" class="upload-input" name="filename" required >
     <label class="upload-file upload-control" for="upload-file"></label>
     <button class="upload-submit upload-control" type="submit"></button>
   </form>
 
-  <div class="upload-overlay">
+  <div class="upload-overlay ">
     <form class="upload-form upload-filter" id="upload-filter" method="post" enctype="multipart/form-data" autocomplete="off">
       <fieldset class="upload-resize-controls">
         <button type="button" class="upload-resize-control upload-resize-controls-button upload-resize-controls-button-dec">–</button><!--
@@ -114,10 +114,10 @@
 </footer>
 
 
-<div class="gallery-overlay invisible">
-  <span class="gallery-overlay-close">&times;</span>
+<div class="gallery-overlay invisible" >
+  <span class="gallery-overlay-close" tabindex="0">&times;</span>
   <div class="gallery-overlay-preview">
-    <img src="" class="gallery-overlay-image" alt="">
+    <img src="" class="gallery-overlay-image"   alt="">
     <div class="gallery-overlay-controls">
       <div class="gallery-overlay-controls-like">Нравится <span class="likes-count">0</span></div>
       <div class="gallery-overlay-controls-comments"><span class="comments-count">125</span> комментариев</div>
@@ -126,12 +126,12 @@
 </div>
 
 <template id="picture-template" style="display: none">
-  <a href="" class="picture">
-    <img src="" width="182" height="182">
-    <span class="picture-stats">
+  <a href="" class="picture" tabindex="0" >
+    <img  id="0"  class="numPicture" src="" width="182" height="182"  >
+    <span class="picture-stats" >
       <span class="picture-stat picture-comments"></span>
       <span class="picture-stat picture-likes"></span>
-    </span>
+   </span>
   </a>
 </template>
 <script src="js/pictures.js"></script>
