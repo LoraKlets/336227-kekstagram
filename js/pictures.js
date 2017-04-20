@@ -214,16 +214,8 @@ uploadFilterControls.addEventListener('click', function (evt) {
     imgPreview.classList.add(cssClass);
   }
 });
-var getinputResizeValue = function () {
-  var valueNumber = inputResizeValue.value;
-  var posPercent = valueNumber.indexOf('%');
-  if (posPercent > -1) {
-    valueNumber = inputResizeValue.value.slice(0, posPercent);
-  }
-  return valueNumber;
-};
 buttonResizeInc.addEventListener('click', function () {
-  var totalValue = +getinputResizeValue() + (+inputResizeValue.step);
+  var totalValue = parseInt(inputResizeValue.value, 10) + parseInt(inputResizeValue.step, 10);
   if (totalValue > inputResizeValue.max) {
     totalValue = inputResizeValue.max;
   }
@@ -233,7 +225,7 @@ buttonResizeInc.addEventListener('click', function () {
 });
 
 buttonResizeDec.addEventListener('click', function () {
-  var totalValue = +getinputResizeValue() - (+inputResizeValue.step);
+  var totalValue = parseInt(inputResizeValue.value, 10) - parseInt(inputResizeValue.step, 10);
   if (totalValue < inputResizeValue.min) {
     totalValue = inputResizeValue.min;
   }
