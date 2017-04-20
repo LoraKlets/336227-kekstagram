@@ -214,6 +214,7 @@ uploadFilterControls.addEventListener('click', function (evt) {
     imgPreview.classList.add(cssClass);
   }
 });
+
 buttonResizeInc.addEventListener('click', function () {
   var totalValue = parseInt(inputResizeValue.value, 10) + parseInt(inputResizeValue.step, 10);
   if (totalValue > inputResizeValue.max) {
