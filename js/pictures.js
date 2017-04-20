@@ -139,14 +139,9 @@ var uploadOverlayKeyHandler = function (evt) {
   }
 };
 var onUploadFormClose = function () {
-  // проверка валидности формы
-  if (uploadFormDescription.validity.valid) {
-    uploadSelectImage.classList.remove('invisible');
-    uploadOverlay.classList.add('invisible');
-    document.removeEventListener('keydown', uploadOverlayKeyHandler);
-  } else {
-    console.log(uploadFormDescription.validationMessage);
-  }
+  uploadSelectImage.classList.remove('invisible');
+  uploadOverlay.classList.add('invisible');
+  document.removeEventListener('keydown', uploadOverlayKeyHandler);
 };
 var onUploadFormSubmit = function () {
   // проверка валидности формы
@@ -156,12 +151,11 @@ var onUploadFormSubmit = function () {
     document.removeEventListener('keydown', uploadOverlayKeyHandler);
     uploadForm.submit();
     uploadForm.reset();
-
   } else {
     // uploadFormDescription обводим красной рамкой
     uploadFormDescription.setAttribute('style', 'border: 3px red solid');
   }
-}
+};
 uploadFile.addEventListener('change', function () {
   uploadSelectImage.classList.add('invisible');
   uploadOverlay.classList.remove('invisible');
@@ -209,7 +203,7 @@ uploadFilterControls.addEventListener('click', function (evt) {
     var filterName = selectedElement.id;
     var classListLength = imgPreview.classList.length;
     if (classListLength > 0) {
-      for (var i = 0; i < classListLength; i++) {
+      for (i = 0; i < classListLength; i++) {
         var oneClassName = imgPreview.classList[i];
         if (oneClassName !== 'filter-image-preview') {
           imgPreview.classList.remove(oneClassName);
