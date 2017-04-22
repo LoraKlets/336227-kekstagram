@@ -1,17 +1,62 @@
 'use strict';
 
 window.preview = (function () {
+  var ESCAPE_KEY_CODE = 27;
+  var ENTER_KEY_CODE = 13;
+  var isActivateEvent = function (evt) {
+    return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
+  };
 
   var galleryOverlay = document.querySelector('.gallery-overlay');
 
-  return function (onePicture) {
-    galleryOverlay.querySelector('.gallery-overlay-image').src = onePicture.url;
-    galleryOverlay.querySelector('.likes-count').textContent = onePicture.likes;
-    galleryOverlay.querySelector('.comments-count').textContent = onePicture.comments.length;
+  var galleryOverlayClose = galleryOverlay.querySelector('.gallery-overlay-close');
 
-    return galleryOverlay;
+  var doOverlayInvisible = function (el) {
+    el.classList.add('invisible');
+  };
+  var doOverlayVisible = function (el) {
+    el.classList.remove('invisible');
   };
 
+  doOverlayInvisible(document.querySelector('.upload-overlay'));
+  galleryOverlayClose.addEventListener('keydown', function (evt) {
+    if (isActivateEvent(evt)) {
+      doOverlayInvisible(galleryOverlay);
+    }
+  });
+  galleryOverlayClose.addEventListener('click', function () {
+    doOverlayInvisible(galleryOverlay);
+  });
+
+  var overlayKeydownHandler = function (evt) {
+    if (evt.keyCode === ESCAPE_KEY_CODE) {
+      galleryOverlay.classList.add('invisible');
+      document.removeEventListener('keydown', overlayKeydownHandler);
+    }
+  };
+  var fillOverlay = function (onePicture) {
+    galleryOverlay.querySelector('.gallery-overlay-image').src = onePicture.href;
+    galleryOverlay.querySelector('.likes-count').textContent = onePicture.querySelector('.picture-likes').textContent;
+    galleryOverlay.querySelector('.comments-count').textContent = onePicture.querySelector('.picture-comments').textContent;
+
+  };
+
+  return {
+    overlayOpenClick: function (evt) {
+      evt.preventDefault();
+      fillOverlay(evt.currentTarget);
+      document.addEventListener('keydown', overlayKeydownHandler);
+      doOverlayVisible(galleryOverlay);
+    },
+    overlayOpenKeydown: function (evt) {
+      if (isActivateEvent(evt)) {
+        evt.preventDefault();
+        fillOverlay(evt.currentTarget);
+        document.addEventListener('keydown', overlayKeydownHandler);
+        doOverlayVisible(galleryOverlay);
+      }
+    }
+  };
 })();
 
 
