@@ -12,7 +12,7 @@ window.gallery = (function () {
   blockPictures.appendChild(fragment);
 
   var pictureElements = document.querySelectorAll('a.picture');
-  pictureElements.forEach(function (el, i) {
+  pictureElements.forEach(function (el) {
     el.addEventListener('click', window.preview.overlayOpenClick);
     el.addEventListener('keydown', window.preview.overlayOpenKeydown);
   });
