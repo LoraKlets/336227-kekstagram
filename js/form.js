@@ -22,23 +22,116 @@ window.formEdit = (function () {
   var isActivateEvent = function (evt) {
     return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
   };
+
+  var filterLevelLine = uploadFilterControls.querySelector('.upload-filter-level-line');
+  var filterPin = uploadFilterControls.querySelector('.upload-filter-level-pin');
+  var filterVal = uploadFilterControls.querySelector('.upload-filter-level-val');
+
+  var MAX_LEFT = 450;
+
+  filterPin.style.left = MAX_LEFT + 'px';
+  filterLevelLine.classList.add('invisible');
+  filterVal.style.width = MAX_LEFT + 'px';
+
+
+  filterPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startX = evt.clientX;
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shiftX = startX - moveEvt.clientX;
+
+      startX = moveEvt.clientX;
+
+      filterPin.style.left = (filterPin.offsetLeft - shiftX) + 'px';
+      if (parseInt(filterPin.style.left) > MAX_LEFT) {
+        filterPin.style.left = MAX_LEFT + 'px';
+      }
+      if (parseInt(filterPin.style.left) < 0) {
+        filterPin.style.left = 0 + 'px';
+      }
+      filterVal.style.width = (filterPin.offsetLeft - shiftX) + 'px';
+
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      var currentClass = imgPreview.classList[1];
+      switch (currentClass) {
+        case  'filter-chrome':
+        {
+          var filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
+          imgPreview.style.filter = 'grayscale(' + filterValue + ')';
+          imgPreview.setAttribute('style', '-webkit-filter: grayscale(' + filterValue + ');');
+          break;
+        }
+        case  'filter-sepia':
+        {
+          var filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
+          imgPreview.style.filter = 'sepia(' + filterValue + ')';
+          imgPreview.setAttribute('style', '-webkit-filter: sepia(' + filterValue + ');');
+          break;
+        }
+        case  'filter-marvin':
+        {
+          var filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1) * 100;
+          imgPreview.style.filter = 'invert(' + filterValue + '%)';
+          imgPreview.setAttribute('style', '-webkit-filter: invert(' + filterValue + '%);');
+          break;
+        }
+        case  'filter-phobos':
+        {
+          var filterValue = Math.floor(parseInt(filterVal.style.width, 10) / 114);
+          imgPreview.style.filter = 'blur(' + filterValue + 'px)';
+          imgPreview.setAttribute('style', '-webkit-filter: blur(' + filterValue + 'px);');
+          break;
+        }
+        case  'filter-heat':
+        {
+          var filterValue = Math.floor(parseInt(filterVal.style.width, 10) / 114);
+          imgPreview.style.filter = 'brightness(' + filterValue + ')';
+          imgPreview.setAttribute('style', '-webkit-filter: brightness(' + filterValue + ');');
+          break;
+        }
+      }
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+
   uploadFilterControls.addEventListener('click', function (evt) {
     var selectedFilter = evt.target.tagName;
 
     if (selectedFilter.toLowerCase() === 'input') {
+
+      filterPin.style.left = MAX_LEFT + 'px';
+      filterVal.style.width = MAX_LEFT + 'px';
+
       var selectedElement = evt.target;
       var filterName = selectedElement.id;
+      if (selectedElement.value === 'none') {
+        filterLevelLine.classList.add('invisible');
+      } else {
+        filterLevelLine.classList.remove('invisible');
+      }
       var classListLength = imgPreview.classList.length;
-      if (classListLength > 0) {
-        for (var i = 0; i < classListLength; i++) {
-          var oneClassName = imgPreview.classList[i];
-          if (oneClassName !== 'filter-image-preview') {
-            imgPreview.classList.remove(oneClassName);
-          }
+      if (classListLength > 1) {
+        for (var i = 1; i < classListLength; i++) {
+          var changingClass = imgPreview.classList[i];
+          imgPreview.classList.remove(changingClass);
         }
       }
       var cssClass = filterName.slice(7);
       imgPreview.classList.add(cssClass);
+      imgPreview.style.filter = '';
+
     }
   });
   var uploadSubmit = document.querySelector('#upload-submit');
