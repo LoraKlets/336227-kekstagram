@@ -118,13 +118,13 @@ window.formEdit = (function () {
     if (selectedFilter.toLowerCase() === 'input') {
       var selectedElement = evt.target;
       var newFilter = selectedElement.value;
-      window.initializeFilters(selectedElement,oldFilter, applyFilter);
+      window.initializeFilters(selectedElement, oldFilter, applyFilter);
       oldFilter = newFilter;
     }
   });
-  
+
   var scaleElement = document.querySelector('.upload-resize-controls');
-  
+
   var adjustScale = function (scale) {
     pictureElement.style.transform = 'scale(' + scale / 100 + ')';
   };
