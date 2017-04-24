@@ -111,7 +111,7 @@ window.formEdit = (function () {
     filterVal.style.width = MAX_LEFT + 'px';
     pictureElement.style.filter = '';
   };
-  
+
   var oldFilter = uploadFilterControls.querySelector('input[name=upload-filter]:checked').value;
   uploadFilterControls.addEventListener('click', function (evt) {
     var selectedFilter = evt.target.tagName;
