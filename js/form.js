@@ -7,10 +7,7 @@ window.formEdit = (function () {
   var uploadOverlay = document.querySelector('.upload-overlay ');
   var divPreview = document.querySelector('.upload-form-preview');
   var imgPreview = divPreview.querySelector('.filter-image-preview');
-  var uploadResizeControls = uploadOverlay.querySelector('.upload-resize-controls');
-  var buttonResizeDec = uploadResizeControls.querySelector('.upload-resize-controls-button-dec');
-  var buttonResizeInc = uploadResizeControls.querySelector('.upload-resize-controls-button-inc');
-  var inputResizeValue = uploadResizeControls.querySelector('.upload-resize-controls-value');
+
   var uploadFormDescription = uploadOverlay.querySelector('.upload-form-description');
   var uploadFormCancel = uploadOverlay.querySelector('.upload-form-cancel');
 
@@ -101,35 +98,38 @@ window.formEdit = (function () {
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+  var pictureElement = document.querySelector('.filter-image-preview');
+  var applyFilter = function (newFilter, oldFilter) {
+    pictureElement.classList.remove('filter-' + oldFilter);
+    pictureElement.classList.add('filter-' + newFilter);
+    if (newFilter === 'none') {
+      filterLevelLine.classList.add('invisible');
+    } else {
+      filterLevelLine.classList.remove('invisible');
+    }
+    filterPin.style.left = MAX_LEFT + 'px';
+    filterVal.style.width = MAX_LEFT + 'px';
+    pictureElement.style.filter = '';
+  };
 
+  var oldFilter = uploadFilterControls.querySelector('input[name=upload-filter]:checked').value;
   uploadFilterControls.addEventListener('click', function (evt) {
     var selectedFilter = evt.target.tagName;
-
     if (selectedFilter.toLowerCase() === 'input') {
-
-      filterPin.style.left = MAX_LEFT + 'px';
-      filterVal.style.width = MAX_LEFT + 'px';
-
       var selectedElement = evt.target;
-      var filterName = selectedElement.id;
-      if (selectedElement.value === 'none') {
-        filterLevelLine.classList.add('invisible');
-      } else {
-        filterLevelLine.classList.remove('invisible');
-      }
-      var classListLength = imgPreview.classList.length;
-      if (classListLength > 1) {
-        for (var i = 1; i < classListLength; i++) {
-          var changingClass = imgPreview.classList[i];
-          imgPreview.classList.remove(changingClass);
-        }
-      }
-      var cssClass = filterName.slice(7);
-      imgPreview.classList.add(cssClass);
-      imgPreview.style.filter = '';
-
+      var newFilter = selectedElement.value;
+      window.initializeFilters(selectedElement, oldFilter, applyFilter);
+      oldFilter = newFilter;
     }
   });
+
+  var scaleElement = document.querySelector('.upload-resize-controls');
+
+  var adjustScale = function (scale) {
+    pictureElement.style.transform = 'scale(' + scale / 100 + ')';
+  };
+  window.initializeScale(scaleElement, adjustScale);
+
   var uploadSubmit = document.querySelector('#upload-submit');
 
   uploadSubmit.addEventListener('click', function (evt) {
@@ -144,26 +144,6 @@ window.formEdit = (function () {
   });
   uploadSubmit.addEventListener('blur', function () {
     uploadFormDescription.setAttribute('style', '');
-  });
-
-  buttonResizeInc.addEventListener('click', function () {
-    var totalValue = parseInt(inputResizeValue.value, 10) + parseInt(inputResizeValue.step, 10);
-    if (totalValue > parseInt(inputResizeValue.max, 10)) {
-      totalValue = parseInt(inputResizeValue.max, 10);
-    }
-    inputResizeValue.value = totalValue + '%';
-    var strScale = (totalValue / 100).toFixed(2);
-    imgPreview.setAttribute('style', 'transform: scale(' + strScale + ')');
-  });
-
-  buttonResizeDec.addEventListener('click', function () {
-    var totalValue = parseInt(inputResizeValue.value, 10) - parseInt(inputResizeValue.step, 10);
-    if (totalValue < parseInt(inputResizeValue.min, 10)) {
-      totalValue = parseInt(inputResizeValue.min, 10);
-    }
-    inputResizeValue.value = totalValue + '%';
-    var strScale = (totalValue / 100).toFixed(2);
-    imgPreview.setAttribute('style', 'transform: scale(' + strScale + ')');
   });
 
   var uploadOverlayKeyHandler = function (evt) {
