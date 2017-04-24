@@ -49,5 +49,5 @@ window.data = (function () {
     pictureArray.push(picture);
   }
   return pictureArray;
-});
+})();
 
