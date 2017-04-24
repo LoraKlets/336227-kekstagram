@@ -47,10 +47,10 @@ window.formEdit = (function () {
       startX = moveEvt.clientX;
 
       filterPin.style.left = (filterPin.offsetLeft - shiftX) + 'px';
-      if (parseInt(filterPin.style.left) > MAX_LEFT) {
+      if (parseInt(filterPin.style.left, 10) > MAX_LEFT) {
         filterPin.style.left = MAX_LEFT + 'px';
       }
-      if (parseInt(filterPin.style.left) < 0) {
+      if (parseInt(filterPin.style.left, 10) < 0) {
         filterPin.style.left = 0 + 'px';
       }
       filterVal.style.width = (filterPin.offsetLeft - shiftX) + 'px';
@@ -60,38 +60,39 @@ window.formEdit = (function () {
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       var currentClass = imgPreview.classList[1];
+      var filterValue;
       switch (currentClass) {
-        case  'filter-chrome':
+        case 'filter-chrome':
         {
-          var filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
+          filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
           imgPreview.style.filter = 'grayscale(' + filterValue + ')';
           imgPreview.setAttribute('style', '-webkit-filter: grayscale(' + filterValue + ');');
           break;
         }
-        case  'filter-sepia':
+        case 'filter-sepia':
         {
-          var filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
+          filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
           imgPreview.style.filter = 'sepia(' + filterValue + ')';
           imgPreview.setAttribute('style', '-webkit-filter: sepia(' + filterValue + ');');
           break;
         }
-        case  'filter-marvin':
+        case 'filter-marvin':
         {
-          var filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1) * 100;
+          filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1) * 100;
           imgPreview.style.filter = 'invert(' + filterValue + '%)';
           imgPreview.setAttribute('style', '-webkit-filter: invert(' + filterValue + '%);');
           break;
         }
-        case  'filter-phobos':
+        case 'filter-phobos':
         {
-          var filterValue = Math.floor(parseInt(filterVal.style.width, 10) / 114);
+          filterValue = Math.floor(parseInt(filterVal.style.width, 10) / 114);
           imgPreview.style.filter = 'blur(' + filterValue + 'px)';
           imgPreview.setAttribute('style', '-webkit-filter: blur(' + filterValue + 'px);');
           break;
         }
-        case  'filter-heat':
+        case 'filter-heat':
         {
-          var filterValue = Math.floor(parseInt(filterVal.style.width, 10) / 114);
+          filterValue = Math.floor(parseInt(filterVal.style.width, 10) / 114);
           imgPreview.style.filter = 'brightness(' + filterValue + ')';
           imgPreview.setAttribute('style', '-webkit-filter: brightness(' + filterValue + ');');
           break;
