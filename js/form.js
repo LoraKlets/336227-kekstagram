@@ -59,36 +59,31 @@ window.formEdit = (function () {
       var currentClass = imgPreview.classList[1];
       var filterValue;
       switch (currentClass) {
-        case 'filter-chrome':
-        {
+        case 'filter-chrome': {
           filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
           imgPreview.style.filter = 'grayscale(' + filterValue + ')';
           imgPreview.setAttribute('style', '-webkit-filter: grayscale(' + filterValue + ');');
           break;
         }
-        case 'filter-sepia':
-        {
+        case 'filter-sepia': {
           filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
           imgPreview.style.filter = 'sepia(' + filterValue + ')';
           imgPreview.setAttribute('style', '-webkit-filter: sepia(' + filterValue + ');');
           break;
         }
-        case 'filter-marvin':
-        {
+        case 'filter-marvin': {
           filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1) * 100;
           imgPreview.style.filter = 'invert(' + filterValue + '%)';
           imgPreview.setAttribute('style', '-webkit-filter: invert(' + filterValue + '%);');
           break;
         }
-        case 'filter-phobos':
-        {
+        case 'filter-phobos': {
           filterValue = Math.floor(parseInt(filterVal.style.width, 10) / 114);
           imgPreview.style.filter = 'blur(' + filterValue + 'px)';
           imgPreview.setAttribute('style', '-webkit-filter: blur(' + filterValue + 'px);');
           break;
         }
-        case 'filter-heat':
-        {
+        case 'filter-heat': {
           filterValue = Math.floor(parseInt(filterVal.style.width, 10) / 114);
           imgPreview.style.filter = 'brightness(' + filterValue + ')';
           imgPreview.setAttribute('style', '-webkit-filter: brightness(' + filterValue + ');');
@@ -128,10 +123,8 @@ window.formEdit = (function () {
     }
   });
   
-
   var scaleElement = document.querySelector('.upload-resize-controls');
-  var pictureElement = document.querySelector('.filter-image-preview');
-
+  
   var adjustScale = function (scale) {
     pictureElement.style.transform = 'scale(' + scale / 100 + ')';
   };
