@@ -5,7 +5,7 @@ window.gallery = (function () {
   var fragment = document.createDocumentFragment();
   var URL = 'https://intensive-javascript-server-kjgvxfepjl.now.sh/kekstagram/data';
   var onLoad = function (data) {
-    console.log(data);
+    
     for (var i = 0; i < data.length; i++) {
       fragment.appendChild(window.picture(data[i]));
     }
