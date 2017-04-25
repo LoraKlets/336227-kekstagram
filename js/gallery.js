@@ -4,7 +4,7 @@ window.gallery = (function () {
   var TWENTY_FIVE = 25;
 
   var blockPictures = document.querySelector('.pictures');
-  var fragment = document.createDocumentFragment();
+  var fragment;
   var filtersBlock = document.querySelector('.filters');
   var URL = 'https://intensive-javascript-server-kjgvxfepjl.now.sh/kekstagram/data';
   var pictureArray = [];
@@ -24,7 +24,7 @@ window.gallery = (function () {
     return numPhoto;
   };
   var onLoad = function (data) {
-    var fragment = document.createDocumentFragment();
+    fragment = document.createDocumentFragment();
     for (var i = 0; i < data.length; i++) {
       fragment.appendChild(window.picture(data[i]));
       pictureArray.push(data[i]);
@@ -52,6 +52,7 @@ window.gallery = (function () {
   window.load(URL, onLoad, onError);
 
   var onGalleryChange = function (filter) {
+    fragment = document.createDocumentFragment();
     blockPictures.innerHTML = '';
     switch (filter) {
       case 'new': {
