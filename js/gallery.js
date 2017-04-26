@@ -62,7 +62,6 @@ window.gallery = (function () {
           photoNumbers.push(nextNum);
           fragment.appendChild(window.picture(pictureArray[nextNum]));
         }
-        blockPictures.appendChild(fragment);
         break;
       }
       case 'discussed': {
@@ -81,16 +80,15 @@ window.gallery = (function () {
         sortPictures.forEach(function (el) {
           fragment.appendChild(window.picture(el));
         });
-        blockPictures.appendChild(fragment);
         break;
       }
       default: {
         pictureArray.forEach(function (el) {
           fragment.appendChild(window.picture(el));
         });
-        blockPictures.appendChild(fragment);
       }
     }
+    blockPictures.appendChild(fragment);
   };
   var currentFilter;
   var lastTimeout;
