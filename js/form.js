@@ -15,7 +15,6 @@ window.formEdit = (function () {
   var uploadFile = document.querySelector('#upload-file');
   var uploadSelectImage = document.querySelector('#upload-select-image');
 
-
   var isActivateEvent = function (evt) {
     return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
   };
@@ -175,7 +174,6 @@ window.formEdit = (function () {
     uploadSelectImage.classList.add('invisible');
     uploadOverlay.classList.remove('invisible');
     document.addEventListener('keydown', uploadOverlayKeyHandler);
-
   });
   uploadFormCancel.addEventListener('click', function () {
     onUploadFormClose();
