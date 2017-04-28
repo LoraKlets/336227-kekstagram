@@ -14,7 +14,8 @@ window.formEdit = (function () {
   var uploadForm = document.querySelector('.upload-form');
   var uploadFile = document.querySelector('#upload-file');
   var uploadSelectImage = document.querySelector('#upload-select-image');
-
+  var inputResizeValue = document.querySelector('.upload-resize-controls-value');
+  
   var isActivateEvent = function (evt) {
     return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
   };
@@ -57,32 +58,38 @@ window.formEdit = (function () {
       upEvt.preventDefault();
       var currentClass = imgPreview.classList[1];
       var filterValue;
+      inputResizeValue.value = '100%';
       switch (currentClass) {
-        case 'filter-chrome': {
+        case 'filter-chrome':
+        {
           filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
           imgPreview.style.filter = 'grayscale(' + filterValue + ')';
           imgPreview.setAttribute('style', '-webkit-filter: grayscale(' + filterValue + ');');
           break;
         }
-        case 'filter-sepia': {
+        case 'filter-sepia':
+        {
           filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
           imgPreview.style.filter = 'sepia(' + filterValue + ')';
           imgPreview.setAttribute('style', '-webkit-filter: sepia(' + filterValue + ');');
           break;
         }
-        case 'filter-marvin': {
+        case 'filter-marvin':
+        {
           filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1) * 100;
           imgPreview.style.filter = 'invert(' + filterValue + '%)';
           imgPreview.setAttribute('style', '-webkit-filter: invert(' + filterValue + '%);');
           break;
         }
-        case 'filter-phobos': {
+        case 'filter-phobos':
+        {
           filterValue = Math.floor(parseInt(filterVal.style.width, 10) / 114);
           imgPreview.style.filter = 'blur(' + filterValue + 'px)';
           imgPreview.setAttribute('style', '-webkit-filter: blur(' + filterValue + 'px);');
           break;
         }
-        case 'filter-heat': {
+        case 'filter-heat':
+        {
           filterValue = Math.floor(parseInt(filterVal.style.width, 10) / 114);
           imgPreview.style.filter = 'brightness(' + filterValue + ')';
           imgPreview.setAttribute('style', '-webkit-filter: brightness(' + filterValue + ');');
@@ -109,6 +116,9 @@ window.formEdit = (function () {
     filterPin.style.left = MAX_LEFT + 'px';
     filterVal.style.width = MAX_LEFT + 'px';
     pictureElement.style.filter = '';
+    pictureElement.style.transform = '';
+    inputResizeValue.value = '100%';
+
   };
 
   var oldFilter = uploadFilterControls.querySelector('input[name=upload-filter]:checked').value;
