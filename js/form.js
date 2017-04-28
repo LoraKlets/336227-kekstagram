@@ -179,6 +179,8 @@ window.formEdit = (function () {
     uploadSelectImage.classList.add('invisible');
     uploadOverlay.classList.remove('invisible');
     document.addEventListener('keydown', uploadOverlayKeyHandler);
+    var selectedElement = document.querySelector('#upload-filter-none');
+    window.initializeFilters(selectedElement, oldFilter, applyFilter);
   });
   uploadFormCancel.addEventListener('click', function () {
     onUploadFormClose();
