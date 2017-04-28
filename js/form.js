@@ -14,7 +14,7 @@ window.formEdit = (function () {
   var uploadForm = document.querySelector('.upload-form');
   var uploadFile = document.querySelector('#upload-file');
   var uploadSelectImage = document.querySelector('#upload-select-image');
-
+  var inputResizeValue = document.querySelector('.upload-resize-controls-value');
 
   var isActivateEvent = function (evt) {
     return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
@@ -58,6 +58,7 @@ window.formEdit = (function () {
       upEvt.preventDefault();
       var currentClass = imgPreview.classList[1];
       var filterValue;
+      inputResizeValue.value = '100%';
       switch (currentClass) {
         case 'filter-chrome': {
           filterValue = (parseInt(filterVal.style.width, 10) / MAX_LEFT).toFixed(1);
@@ -110,6 +111,9 @@ window.formEdit = (function () {
     filterPin.style.left = MAX_LEFT + 'px';
     filterVal.style.width = MAX_LEFT + 'px';
     pictureElement.style.filter = '';
+    pictureElement.style.transform = '';
+    inputResizeValue.value = '100%';
+
   };
 
   var oldFilter = uploadFilterControls.querySelector('input[name=upload-filter]:checked').value;
@@ -175,7 +179,6 @@ window.formEdit = (function () {
     uploadSelectImage.classList.add('invisible');
     uploadOverlay.classList.remove('invisible');
     document.addEventListener('keydown', uploadOverlayKeyHandler);
-
   });
   uploadFormCancel.addEventListener('click', function () {
     onUploadFormClose();
