@@ -21,7 +21,7 @@
     return numPhoto;
   };
   var setPictureHandlers = function (elements) {
-    
+
     [].map.call(elements, function (el) {
       return el;
     }).forEach(function (el) {
