@@ -21,7 +21,8 @@
     return numPhoto;
   };
   var setPictureHandlers = function (elements) {
-    [].map.call(elements, function () {}).forEach(function (el) {
+    
+    [].map.call(elements, function (el) {return el;}).forEach(function (el) {
       el.addEventListener('click', window.preview.overlayOpenClick);
       el.addEventListener('keydown', window.preview.overlayOpenKeydown);
     });
