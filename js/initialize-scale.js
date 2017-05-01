@@ -1,7 +1,7 @@
 'use strict';
 
 window.initializeScale = (function () {
-  var scaleControl = function (scaleElement, callback) {
+  return  function (scaleElement, callback) {
     var buttonResizeDec = scaleElement.querySelector('.upload-resize-controls-button-dec');
     var buttonResizeInc = scaleElement.querySelector('.upload-resize-controls-button-inc');
     var inputResizeValue = scaleElement.querySelector('.upload-resize-controls-value');
@@ -22,6 +22,6 @@ window.initializeScale = (function () {
       }
     });
   };
-  return scaleControl;
+
 })();
 

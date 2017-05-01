@@ -1,8 +1,8 @@
 'use strict';
 
-window.gallery = (function () {
-  var TWENTY_FIVE = 25;
-
+(function () {
+  var TOTAL_PHOTO = 25;
+  var DEBOUNCE_INTERVAL = 500;
   var blockPictures = document.querySelector('.pictures');
   var fragment;
   var filtersBlock = document.querySelector('.filters');
@@ -10,45 +10,52 @@ window.gallery = (function () {
   var pictureArray = [];
   var nextNum;
   var photoNumbers = [];
-  var randomNumber = function (MIN, MAX) {
-    return MIN + Math.floor(Math.random() * (MAX + 1 - MIN));
+  var getRandomNumber = function (minValue, maxValue) {
+    return minValue + Math.floor(Math.random() * (maxValue + 1 - minValue));
   };
-  var isPhotoInArray = function (array, num) {
-    return array.indexOf(num);
-  };
-  var nextPhotoNum = function (array) {
-    var numPhoto = randomNumber(1, TWENTY_FIVE);
-    while (isPhotoInArray(array, numPhoto) > -1) {
-      numPhoto = randomNumber(1, TWENTY_FIVE);
+  var getNextPhotoNum = function (array) {
+    var numPhoto = getRandomNumber(1, TOTAL_PHOTO);
+    while (array.indexOf(numPhoto) > -1) {
+      numPhoto = getRandomNumber(1, TOTAL_PHOTO);
     }
     return numPhoto;
+  };
+  var setPictureHandlers = function (elements) {
+    elements.forEach(function (el) {
+      el.addEventListener('click', window.preview.overlayOpenClick);
+      el.addEventListener('keydown', window.preview.overlayOpenKeydown);
+    });
   };
   var onLoad = function (data) {
     fragment = document.createDocumentFragment();
     for (var i = 0; i < data.length; i++) {
-      fragment.appendChild(window.picture(data[i]));
+      fragment.appendChild(window.renderPicture(data[i]));
       pictureArray.push(data[i]);
     }
     blockPictures.appendChild(fragment);
-
+    
     var pictureElements = document.querySelectorAll('a.picture');
-    pictureElements.forEach(function (el) {
-      el.addEventListener('click', window.preview.overlayOpenClick);
-      el.addEventListener('keydown', window.preview.overlayOpenKeydown);
-    });
+    setPictureHandlers(pictureElements);
+    
     filtersBlock.classList.remove('hidden');
   };
+  
   var onError = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-
+    var node = document.getElementById('error-block');
+    
+    if (node === null) {
+      node = document.createElement('div');
+      node.id = 'error-block';
+      node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+      node.style.position = 'absolute';
+      node.style.left = 0;
+      node.style.right = 0;
+      node.style.fontSize = '18px';
+      document.body.insertBefore(node, filtersBlock);
+    }
     node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
   };
+  
   window.load(URL, onLoad, onError);
 
   var onGalleryChange = function (filter) {
@@ -58,9 +65,9 @@ window.gallery = (function () {
       case 'new': {
         photoNumbers = [];
         for (var i = 0; i < 10; i++) {
-          nextNum = nextPhotoNum(photoNumbers);
+          nextNum = getNextPhotoNum(photoNumbers);
           photoNumbers.push(nextNum);
-          fragment.appendChild(window.picture(pictureArray[nextNum]));
+          fragment.appendChild(window.renderPicture(pictureArray[nextNum]));
         }
         break;
       }
@@ -78,25 +85,30 @@ window.gallery = (function () {
           }
         });
         sortPictures.forEach(function (el) {
-          fragment.appendChild(window.picture(el));
+          fragment.appendChild(window.renderPicture(el));
         });
         break;
       }
-      default: {
+      default:
+      {
         pictureArray.forEach(function (el) {
-          fragment.appendChild(window.picture(el));
+          fragment.appendChild(window.renderPicture(el));
         });
       }
     }
     blockPictures.appendChild(fragment);
+    var pictureElements = document.querySelectorAll('a.picture');
+    setPictureHandlers(pictureElements);
   };
+  
   var currentFilter;
   var lastTimeout;
+  
   var debounce = function (fun) {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }
-    lastTimeout = window.setTimeout(fun, 500);
+    lastTimeout = window.setTimeout(fun, DEBOUNCE_INTERVAL);
   };
   filtersBlock.addEventListener('click', function (evt) {
     if (evt.target.tagName.toLowerCase() === 'input') {

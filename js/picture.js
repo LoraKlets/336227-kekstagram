@@ -1,6 +1,6 @@
 'use strict';
 
-window.picture = (function () {
+window.renderPicture = (function () {
 // заполнение шаблона
   var pictureTemplate = document.querySelector('#picture-template').content;
   return function (photo) {

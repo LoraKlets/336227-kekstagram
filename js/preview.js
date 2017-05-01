@@ -2,13 +2,8 @@
 
 window.preview = (function () {
   var ESCAPE_KEY_CODE = 27;
-  var ENTER_KEY_CODE = 13;
-  var isActivateEvent = function (evt) {
-    return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
-  };
-
+  
   var galleryOverlay = document.querySelector('.gallery-overlay');
-
   var galleryOverlayClose = galleryOverlay.querySelector('.gallery-overlay-close');
 
   var doOverlayInvisible = function (el) {
@@ -20,7 +15,7 @@ window.preview = (function () {
 
   doOverlayInvisible(document.querySelector('.upload-overlay'));
   galleryOverlayClose.addEventListener('keydown', function (evt) {
-    if (isActivateEvent(evt)) {
+    if (window.isActivateEvent(evt)) {
       doOverlayInvisible(galleryOverlay);
     }
   });
@@ -28,10 +23,10 @@ window.preview = (function () {
     doOverlayInvisible(galleryOverlay);
   });
 
-  var overlayKeydownHandler = function (evt) {
+  var onOverlayKeydown = function (evt) {
     if (evt.keyCode === ESCAPE_KEY_CODE) {
       galleryOverlay.classList.add('invisible');
-      document.removeEventListener('keydown', overlayKeydownHandler);
+      document.removeEventListener('keydown', onOverlayKeydown);
     }
   };
   var fillOverlay = function (onePicture) {
@@ -45,14 +40,14 @@ window.preview = (function () {
     overlayOpenClick: function (evt) {
       evt.preventDefault();
       fillOverlay(evt.currentTarget);
-      document.addEventListener('keydown', overlayKeydownHandler);
+      document.addEventListener('keydown', onOverlayKeydown);
       doOverlayVisible(galleryOverlay);
     },
     overlayOpenKeydown: function (evt) {
-      if (isActivateEvent(evt)) {
+      if (window.isActivateEvent(evt)) {
         evt.preventDefault();
         fillOverlay(evt.currentTarget);
-        document.addEventListener('keydown', overlayKeydownHandler);
+        document.addEventListener('keydown', onOverlayKeydown);
         doOverlayVisible(galleryOverlay);
       }
     }

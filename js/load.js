@@ -2,7 +2,7 @@
 
 window.load = (function () {
 
-  var functionLoad = function (URL, onLoad, onError) {
+  return function (URL, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -22,11 +22,11 @@ window.load = (function () {
       onError('Запрос не успел выполниться за ' + xhr.timeout + ' мс');
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = 1000;
 
     xhr.open('GET', URL);
     xhr.send();
   };
-  return functionLoad;
+
 })();
 
