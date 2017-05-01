@@ -2,7 +2,6 @@
 
 window.preview = (function () {
   var ESCAPE_KEY_CODE = 27;
-  
   var galleryOverlay = document.querySelector('.gallery-overlay');
   var galleryOverlayClose = galleryOverlay.querySelector('.gallery-overlay-close');
 
