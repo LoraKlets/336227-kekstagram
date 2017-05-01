@@ -33,16 +33,16 @@
       pictureArray.push(data[i]);
     }
     blockPictures.appendChild(fragment);
-    
+
     var pictureElements = document.querySelectorAll('a.picture');
     setPictureHandlers(pictureElements);
-    
+
     filtersBlock.classList.remove('hidden');
   };
-  
+
   var onError = function (errorMessage) {
     var node = document.getElementById('error-block');
-    
+
     if (node === null) {
       node = document.createElement('div');
       node.id = 'error-block';
@@ -55,9 +55,9 @@
     }
     node.textContent = errorMessage;
   };
-  
+
   window.load(URL, onLoad, onError);
-  
+
   var onGalleryChange = function (filter) {
     fragment = document.createDocumentFragment();
     blockPictures.innerHTML = '';
@@ -89,20 +89,20 @@
         });
         break;
       }
-        default: {
-          pictureArray.forEach(function (el) {
-            fragment.appendChild(window.renderPicture(el));
-          });
-        }
+      default: {
+        pictureArray.forEach(function (el) {
+          fragment.appendChild(window.renderPicture(el));
+        });
+      }
     }
     blockPictures.appendChild(fragment);
     var pictureElements = document.querySelectorAll('a.picture');
     setPictureHandlers(pictureElements);
   };
-  
+
   var currentFilter;
   var lastTimeout;
-  
+
   var debounce = function (fun) {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);

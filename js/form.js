@@ -23,7 +23,7 @@
   filterPin.style.left = MAX_LEFT + 'px';
   filterLevelLine.classList.add('invisible');
   filterVal.style.width = MAX_LEFT + 'px';
-  
+
   var startX;
   var onMouseMove = function (moveEvt) {
     moveEvt.preventDefault();
