@@ -31,10 +31,10 @@
   };
   var onLoad = function (data) {
     fragment = document.createDocumentFragment();
-    for (var i = 0; i < data.length; i++) {
-      fragment.appendChild(window.renderPicture(data[i]));
-      pictureArray.push(data[i]);
-    }
+    data.forEach(function (it) {
+      fragment.appendChild(window.renderPicture(it));
+      pictureArray.push(it);
+    });
     blockPictures.appendChild(fragment);
 
     var pictureElements = document.querySelectorAll('a.picture');
@@ -49,7 +49,7 @@
     if (node === null) {
       node = document.createElement('div');
       node.id = 'error-block';
-      node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+      node.classList.add('error-div'); 
       node.style.position = 'absolute';
       node.style.left = 0;
       node.style.right = 0;
@@ -77,15 +77,7 @@
       case 'discussed': {
         var sortPictures = pictureArray.slice();
         sortPictures.sort(function (first, second) {
-          if (first.comments.length > second.comments.length) {
-            return -1;
-          } else {
-            if (first.comments.length < second.comments.length) {
-              return 1;
-            } else {
-              return 0;
-            }
-          }
+          return (second.comments.length - first.comments.length);
         });
         sortPictures.forEach(function (el) {
           fragment.appendChild(window.renderPicture(el));

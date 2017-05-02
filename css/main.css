@@ -23,6 +23,12 @@ body {
   font: 14px "Open Sans", Arial, sans-serif;
   color: #ffe753;
 }
+.error-div {
+  z-index: 100;
+  margin: 0 auto; 
+  text-align: center;
+  background-color: red;   
+}
 
 .invisible {
   display: none;
