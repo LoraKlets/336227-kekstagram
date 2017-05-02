@@ -49,7 +49,7 @@
     if (node === null) {
       node = document.createElement('div');
       node.id = 'error-block';
-      node.classList.add('error-div'); 
+      node.classList.add('error-div');
       node.style.position = 'absolute';
       node.style.left = 0;
       node.style.right = 0;
